@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-zinc-900 text-white p-10">
+    <div class="flex justify-between items-center" >
+    <div class="w-20 h-20 mb-5 rounded-full relative  " >
+        <div class="w-7 h-7 mb-5 rounded-full absolute top-[1px] right-[-15px]" ><a href="/updateprofile"><img class="w-full h-full rounded-full object-cover invert" src="/images/image.png" alt=""></a></div>
+        <img class="w-full h-full rounded-full object-cover" src="/images/uploads/<%= user.profile %>" alt="">
+    </div>
+    <a class="py-2 px-2 bg-red-500 rounded rounded-md h-10 " href="/logout">Logout</a>
+</div>
+    
+        <h1>Hello 👋 <%= user.name %></h1>
+    
+    <h3 class="mb-5 mt-1">You can create a post</h3>
+    <form action="/post" method="post">
+        <textarea class="outline-none p-2 resize-none border-zinc-800 border-2 w-1/3" name="content"
+            placeholder="Write what in your mind"></textarea>
+        <input class="py-2 px-2 bg-blue-500 rounded rounded-md block" type="submit" value="Create post">
+    </form>
+    <h3 class="mt-15 mb-5 text-zinc-500">Your Post</h3>
+    <div class="flex flex-wrap gap-4">
+        <% user.posts.reverse().forEach(function(post) { %>
+            <div class="bg-zinc-800 mb-5 w-1/3 p-4 border-2 border-zinc-800 rounded rounded-md">
+                <h3 class="text-blue-500">@<%= user.username%>
+                </h3>
+                <p class="mb-1">
+                    <%= post.content%>
+                </p>
+                <small class="mb-2 inline-block">
+                    <%= post.likes.length %> likes
+                </small>
+                <div class="flex gap-4">
+                    <a class="text-blue-500" href="/like/<%= post._id %>">
+                        <%= post.likes.indexOf(user._id)===-1? "Like" : "Unlike" %>
+                    </a>
+                    <a href="/edit/<%= post._id %>">edit</a>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+    
+</body>
+
+</html>
